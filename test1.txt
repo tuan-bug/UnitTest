@@ -1,0 +1,138 @@
+import java.util.*;
+
+
+class TaiLieu {
+	String tenTL, tenTG;
+	
+	TaiLieu(){};
+	
+	public TaiLieu(String tenTL, String tenTG) {
+	
+		this.tenTL = tenTL;
+		this.tenTG = tenTG;
+	}
+	
+	public void nhapTL() {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("\nNhap ten tai lieu :");
+		tenTL = sc.nextLine();
+	
+		System.out.print("Nhap ten tac gia :");
+		tenTG = sc.nextLine();
+		
+	}
+	
+	public void xuatTL() {
+		System.out.printf("\n%-20s%-20s" , tenTL, tenTG);
+	}
+	public String getTen(){
+	    return this.tenTL;
+	}
+	
+}
+
+class Sach extends TaiLieu {
+	
+	String NXB;
+	int namXB;
+	Sach(){};
+	public Sach(String tenTL, String tenTG,String NXB, int namXB) {
+		super(tenTL, tenTG);
+		this.NXB = NXB;
+		this.namXB = namXB;
+	}
+	
+	public void nhapS() {
+		Scanner sc = new Scanner(System.in);
+		
+		super.nhapTL();
+		System.out.print("Nhap ten nha xuat ban :");
+		NXB = sc.nextLine();
+		
+		do {
+			System.out.print("Nhap nam xuatban :");
+			try {
+				namXB = Integer.parseInt(sc.nextLine());
+			} catch(Exception e) {
+				namXB = 0;
+			}
+		}while( namXB <= 2022);
+	}
+	
+	public void xuatS() {
+		super.xuatTL();
+		System.out.printf("%-20s%-20s" , NXB, namXB);
+	}
+	
+	
+	
+}
+
+class QL_Sach {
+	int n;
+	Sach [] a;
+	
+	public void nhapDS() {
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.print("Nhap vao so luong sach :");
+			try {
+				n = Integer.parseInt(sc.nextLine());
+			} catch(Exception e) {
+				n = 0;
+			}
+		}while(n < 2 || n > 25);
+		
+		a = new Sach[n];
+		
+		for(int i = 0; i < n ;i++) {
+			System.out.print("	++++	Nhap vao sach thu :" + (i+1));
+			a[i] = new Sach();
+			a[i].nhapS();
+		}
+	}
+	
+	public void xuatDS(){
+		System.out.printf("\n%-20s%-20s%-20s%-20s\n" , "Ten Tai Lieu","Ten Tac Gia", "Ten NXB" , "Nam XB");
+		
+		for(int i = 0; i < n; i++) {
+			a[i].xuatS();
+		}
+	}
+	
+	public void timTheoTen() {
+	    Scanner sc = new Scanner(System.in);
+        String key;
+        System.out.print("\nNhap vao tu khoa tim kiem: " );
+        key = sc.nextLine();
+		int dem = 0;
+		for(int i = 0; i < n; i++) {
+			if(a[i].getTen() == key) {
+				dem ++;
+			}
+		}
+		
+		if(dem > 0) {
+			System.out.print("\n\n ==== Danh sach tim kiem ====\n" );
+		System.out.printf("\n%-20s%-20s%-20s%-20s\n" , "Ten Tai Lieu","Ten Tac Gia", "Ten NXB" , "Nam XB");
+			for(int i = 0 ; i < n;i++) {
+				if(a[i].getTen() == key) {
+					a[i].xuatS();
+				}
+			}
+		}
+		if(dem == 0)
+			System.out.print("Khong tim thay\n" );
+	
+	}
+	public static void main(String[] args) {
+		QL_Sach s = new QL_Sach();
+		s.nhapDS();
+		s.xuatDS();
+		s.timTheoTen();
+	
+
+	}
+}
+
